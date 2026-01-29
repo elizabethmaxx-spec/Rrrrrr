@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дневник: Ошибка сервера</title>
+    <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; cursor: pointer; }
+        
+        /* Ловушка: вид электронного журнала */
+        #journal { padding: 40px; text-align: center; color: #333; }
+        .header { background: #007bff; color: white; padding: 10px; margin-bottom: 20px; border-radius: 4px; }
+        table { width: 100%; max-width: 500px; margin: 20px auto; border-collapse: collapse; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 15px; text-align: left; }
+        th { background: #f8f9fa; }
+        .bad-grade { color: #d93025; font-weight: bold; }
+        .reload-btn { background: #d93025; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 5px; cursor: pointer; margin-top: 20px; animation: pulse 1.5s infinite; }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* Секция ужаса */
+        #screamer {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: black;
+            z-index: 9999;
+        }
+        #screamer img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* Эффект дикого глюка */
+        .glitch-mode {
+            animation: glitch 0.04s infinite;
+        }
+        @keyframes glitch {
+            0% { transform: translate(15px, 15px); filter: invert(0) contrast(1); }
+            50% { transform: translate(-15px, -15px); filter: invert(1) contrast(5) hue-rotate(90deg); }
+            100% { transform: translate(0, 0); }
+        }
+    </style>
+</head>
+<body onclick="activateScreamer()">
+
+    <div id="journal">
+        <div class="header">МОСКОВСКАЯ ЭЛЕКТРОННАЯ ШКОЛА</div>
+        <h2 style="color: #d93025;">ВНИМАНИЕ: СБОЙ СИСТЕМЫ</h2>
+        <p>Ваши оценки за четверть были изменены из-за ошибки в базе данных:</p>
+        <table>
+            <tr><th>Предмет</th><th>Оценка</th></tr>
+            <tr><td>Алгебра</td><td class="bad-grade">2 (не зачтено)</td></tr>
+            <tr><td>Физика</td><td class="bad-grade">2 (не зачтено)</td></tr>
+            <tr><td>Информатика</td><td class="bad-grade">ОШИБКА 0x666</td></tr>
+        </table>
+        <button class="reload-btn">ИСПРАВИТЬ ОШИБКУ</button>
+    </div>
+
+    <div id="screamer">
+        <img id="face" class="glitch-mode" src="https://i.pinimg.com/474x/bc/00/e5/bc00e5012dd5e5f53ef1a6488f3b3ecb.jpg?nii=t">
+    </div>
+
+    <audio id="audio" src="https://files.catbox.moe/mzyqbo.mp3" preload="auto"></audio>
+
+    <script>
+        function activateScreamer() {
+            // Фуллскрин для эффекта ловушки
+            let doc = document.documentElement;
+            if (doc.requestFullscreen) doc.requestFullscreen();
+            else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
+
+            // Переключение экранов
+            document.getElementById('journal').style.display = 'none';
+            document.getElementById('screamer').style.display = 'block';
+
+            // Звук на максимум и в цикл
+            let snd = document.getElementById('audio');
+            snd.volume = 1.0;
+            snd.play();
+            snd.loop = true;
+
+            // Через 5 секунд зумим морду прямо в лицо
+            setTimeout(() => {
+                document.getElementById('face').style.transform = "scale(3)";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
